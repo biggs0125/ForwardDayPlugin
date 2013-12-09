@@ -1,0 +1,23 @@
+<html>
+<script>
+function getText() {
+    console.log("here");
+    req=new XMLHttpRequest();
+    req.open("GET","http://prayer.forwardmovement.org/forward_day_by_day.php",true);
+    req.send();
+    req.onreadystatechange=function()
+    {
+        if(req.readyState==4 && req.status==200) {
+            console.log(req.responseText);
+        }
+    }
+}
+</script>
+<button onclick="getText()">hi</button>
+<div style="width:200px; height:auto;border:solid black 2px;">
+<h4>Forward Movement Day by Day</h4>
+<h5 style="text-align:center"><u>Daily Prayer</u></h5>
+<p>Matthew _____<br>
+To read more, click <link>here</link>.</p>
+</div>
+</html>
