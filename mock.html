@@ -1,7 +1,38 @@
 <html>
 <script>
+window.onload=function() {
+    var d = new Date()
+    var daynum = d.getDay();
+    var day = ""
+    var date = d.getDate();
+    var month = d.getMonth();
+    var year = d.getFullYear();
+    if (daynum == 0) { 
+       day = "Sunday"
+    }
+    if (daynum == 1) { 
+       day = "Monday"
+    }
+    if (daynum == 2) { 
+       day = "Tuesday"
+    }
+    if (daynum == 3) { 
+       day = "Wednesday"
+    }
+    if (daynum == 4) { 
+       day = "Thursday"
+    }
+    if (daynum == 5) { 
+       day = "Friday"
+    }
+    if (daynum == 6) { 
+       day = "Saturday"
+    }
+    var toDisp=day+", "+d.toLocaleDateString()
+    document.getElementById("date").innerHTML=toDisp;
+}
 function getText() {
-    req=new XMLHttpRequest();
+    var req=new XMLHttpRequest();
     req.open("GET","http://prayer.forwardmovement.org/forward_day_by_day.php",true);
     req.send();
     req.onreadystatechange=function()
@@ -12,7 +43,6 @@ function getText() {
     }
 }
 </script>
-
 <button onclick="getText()">hi</button>
 <div style="width:200px; height:auto; background-color:#EBEBF3; text-align:center; border-radius:5px; border:solid black 2px;">
   <div style="width:100%; background-color:#022B4B;">
@@ -20,7 +50,7 @@ function getText() {
   <br>
   </div>
   <h4 style="color:#09488B; display:inline;"><br><b>Daily Prayer for:</b></h4><br>
-  <p id="verse" style="display:inline;"><br><span id="date">Monday, December 10, 2013</span><br><br>Matthew _____<br><br>
-    To read more, click <link><u>here</u></link>.</p>
+  <p id="verse" style="display:inline;"><br><span id="date"></span><br><br>Matthew _____<br><br>
+    To read more, click <a href="http://prayer.forwardmovement.org/forward_day_by_day.php" target="Daily_Prayer">here</a>.</p>
 </div>
 </html>
