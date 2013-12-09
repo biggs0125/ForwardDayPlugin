@@ -1,14 +1,13 @@
 <html>
 <script>
 function getText() {
-    console.log("here");
     req=new XMLHttpRequest();
     req.open("GET","http://prayer.forwardmovement.org/forward_day_by_day.php",true);
     req.send();
     req.onreadystatechange=function()
     {
         if(req.readyState==4 && req.status==200) {
-            console.log(req.responseXML);
+            document.getElementById("verse").innerHTML="hello"
         }
     }
 }
