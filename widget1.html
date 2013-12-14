@@ -1,0 +1,70 @@
+<html>
+<script>
+function getText(date,month,year) {
+    if (window.XMLHttpRequest){
+        var req=new XMLHttpRequest();}
+    else {
+        var req=new ActiveXObject("Microsoft.XMLHTTP");}
+    req.open("GET","http://prayer.forwardmovement.org/bare/bare_daily_readings.php?d="+date.toString()+"&m="+month.toString()+"&y="+year.toString(),true);
+    req.send();
+    req.onreadystatechange=function(){
+        if(req.readyState==4 && req.status==200){
+            if (window.DOMParser){
+                parser=new DOMParser();
+                htmlDoc=parser.parseFromString(req.responseText,"text/html");}
+            else{
+                htmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+                htmlDoc.async=true;
+                htmlDoc.loadXML(req.responseText);}
+                passagelist=htmlDoc.getElementsByTagName("h2");
+                var passages="Today's readings are:";
+                for(var i=0;i< passagelist.length;i++) {
+                    passages = passages+"<br>"+passagelist[i].innerHTML;
+                }
+                document.getElementById("today").innerHTML=passages;}}}
+window.onload=function() {
+    var d = new Date();
+    var daynum = d.getDay();
+    var mon = d.getMonth();
+    var year = d.getFullYear();
+    var day = "";
+    if (daynum == 0) {day = "Sunday";}
+    if (daynum == 1) {day = "Monday";}
+    if (daynum == 2) {day = "Tuesday";}
+    if (daynum == 3) {day = "Wednesday";}
+    if (daynum == 4) {day = "Thursday";}
+    if (daynum == 5) {day = "Friday";}
+    if (daynum == 6) {day = "Saturday";}
+    var toDisp=day+", "+d.toLocaleDateString();
+    document.getElementById("date").innerHTML=toDisp;
+    if(daynum == 0) {
+        document.getElementById("sunday").innerHTML="To view today's readings click <a href='http://prayer.forwardmovement.org/the_daily_readings.php'>here</a>."
+        getText(d.getDate(),mon+1,year);
+    } 
+    else {
+        var sundaydate=d.getDate()+(7-daynum);
+        if(mon==8||mon==3||mon==5||mon==10){
+            if(sundaydate>30){sundaydate=sundaydate-30;mon=mon+1;}
+        }
+        else if(mon==0||mon==2||mon==4||mon==6||mon==7||mon==9||mon==11){
+            if(sundaydate>31){sundaydate=sundaydate-31;mon=mon+1;}
+        }
+        else if(mon==1&& year%4==0){
+            if(sundaydate>29){sundaydate=sundaydate-29;mon=mon+1;}
+        }
+        else if(mon==1&& year%4!=0){
+            if(sundaydate>28){sundaydate=sundaydate-28;mon=mon+1;}
+        }
+        if(mon>11){mon=mon-12;year=year+1;}
+        document.getElementById("sundaylink").href="http://prayer.forwardmovement.org/the_daily_readings.php?d="+sundaydate.toString()+"&m="+(mon+1).toString()+"&y="+year.toString();
+    }
+}
+</script>
+<link href='http://fonts.googleapis.com/css?family=Belleza' rel='stylesheet' type='text/css'>
+<div style="width:400px;height:400px;">
+<div style="max-width:300px;min-width:150px;width:80%;height:auto;max-height:400px;min-height:200px;background-color:#EBEBF3;text-align:center;border-radius:5px;border:solid black 2px;font-family:'Belleza',sans-serif;">
+<div style="width:100%;height:auto;background-color:#022B4B;"><h4 style="color:#FFFFFF;display:inline;text-shadow:2px 2px black;">Forward Movement<br>Day by Day</h4><br></div>
+<h4 style="color:#09488B;display:inline;"><br><b>Today is:</b></h4><br>
+<span id="date"></span><br><br>
+<p id="today"> For today's readings, click <a href="http://prayer.forwardmovement.org/the_daily_readings.php" target="Today_Daily_Reading">here</a>.</p>
+<p id="sunday"> For Sunday's readings, click <a id="sundaylink" target="Sunday_Daily_Reading">here</a>.</p></div></div></html>
