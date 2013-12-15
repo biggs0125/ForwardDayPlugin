@@ -1,27 +1,20 @@
 <html>
 <script>
 function getText(date,month,year) {
-    if (window.XMLHttpRequest){
-        var req=new XMLHttpRequest();}
-    else {
-        var req=new ActiveXObject("Microsoft.XMLHTTP");}
+    if(window.XMLHttpRequest){var req=new XMLHttpRequest();}
+    else {var req=new ActiveXObject("Microsoft.XMLHTTP");}
     req.open("GET","http://prayer.forwardmovement.org/bare/bare_daily_readings.php?d="+date.toString()+"&m="+month.toString()+"&y="+year.toString(),true);
     req.send();
     req.onreadystatechange=function(){
         if(req.readyState==4 && req.status==200){
-            if (window.DOMParser){
-                parser=new DOMParser();
-                htmlDoc=parser.parseFromString(req.responseText,"text/html");}
-            else{
-                htmlDoc=new ActiveXObject("Microsoft.XMLDOM");
-                htmlDoc.async=true;
-                htmlDoc.loadXML(req.responseText);}
-                passagelist=htmlDoc.getElementsByTagName("h2");
-                var passages="Today's readings are:";
-                for(var i=0;i< passagelist.length;i++) {
-                    passages = passages+"<br>"+passagelist[i].innerHTML;
-                }
-                document.getElementById("today").innerHTML=passages;}}}
+            console.log(req.responseText);
+            var passageList = req.responseText.match(/<h2>(.*?)<\/h2>/g);
+            var passages = "Today's readings:<br>"
+            for(var i = 0; i < passageList.length; i++){
+                passages = passages + "<br>" + passageList[i].replace("<h2>", "").replace("</h2>", "");
+            }
+            console.log(passages);
+            document.getElementById("today").innerHTML=passages;}}}
 window.onload=function() {
     var d = new Date();
     var daynum = d.getDay();
@@ -61,9 +54,9 @@ window.onload=function() {
 }
 </script>
 <link href='http://fonts.googleapis.com/css?family=Belleza' rel='stylesheet' type='text/css'>
-<div style="width:400px;height:400px;">
+<div style="width:300px;height:400px;">
 <div style="max-width:300px;min-width:150px;width:80%;height:auto;max-height:400px;min-height:200px;background-color:#EBEBF3;text-align:center;border-radius:5px;border:solid black 2px;font-family:'Belleza',sans-serif;">
-<div style="width:100%;height:auto;background-color:#022B4B;"><h4 style="color:#FFFFFF;display:inline;text-shadow:2px 2px black;">Forward Movement<br>Day by Day</h4><br></div>
+<div style="width:100%;height:auto;background-color:#022B4B;min-height:55px;"><image width="42px" height="50px" src="http://renewalworks.org/wp-content/uploads/2013/05/FM_7_a_LOres-258x300.jpg" style="display:inline-block;position:relative;vertical-align:bottom;left:5px;top:2px;float:left;"></image><h4 style="color:#FFFFFF;font-size:115%;display:inline;position:relative;text-shadow:2px 2px black;z-index:0;">Forward Movement<br>Day by Day</h4><br></div>
 <h4 style="color:#09488B;display:inline;"><br><b>Today is:</b></h4><br>
 <span id="date"></span><br><br>
 <p id="today"> For today's readings, click <a href="http://prayer.forwardmovement.org/the_daily_readings.php" target="Today_Daily_Reading">here</a>.</p>
