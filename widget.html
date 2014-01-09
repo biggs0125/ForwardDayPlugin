@@ -12,18 +12,18 @@ function getText() {
             if (window.DOMParser){
                 if(browserName == "Safari"){
                     var quote = req.responseText.match(/<p class="quote">(.*?)<\/p>/)[0];
-                    document.getElementById("verse").innerHTML=quote;}
+                    document.getElementById("FDverse").innerHTML=quote;}
                 else{
                     parser=new DOMParser();
                     htmlDoc=parser.parseFromString(req.responseText, "text/html");
                     var quote = htmlDoc.getElementsByClassName("quote");
-                    document.getElementById("verse").innerHTML=quote[0].innerText;}}
+                    document.getElementById("FDverse").innerHTML=quote[0].innerText;}}
             else{
                 htmlDoc=new ActiveXObject("Microsoft.XMLDOM");
                 htmlDoc.async=true;
                 htmlDoc.loadXML(req.responseText);
                 var quote = htmlDoc.getElementsByClassName("quote");
-                document.getElementById("verse").innerHTML=quote[0].innerText;}}}}
+                document.getElementById("FDverse").innerHTML=quote[0].innerText;}}}}
 window.onload=function() {
     var d = new Date();
     var daynum = d.getDay();
@@ -36,13 +36,57 @@ window.onload=function() {
     if (daynum == 5) {day = "Friday";}
     if (daynum == 6) {day = "Saturday";}
     var toDisp=day+", "+d.toLocaleDateString();
-    document.getElementById("date").innerHTML=toDisp;
+    document.getElementById("FDdate").innerHTML=toDisp;
     getText();}
 </script>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<style>
+#FDwidgetDiv {
+max-width:300px;
+min-width:150px;
+width:80%;
+height:auto;
+max-height:400px;
+min-height:200px;
+background-color:#F0F2F5;
+border-radius:5px;
+border: solid #004a8d 2px;
+font-family: "Open Sans" Sans-Serif;
+text-align: center;
+}
+#FDheaderArea {
+width:100%;
+height:auto;
+background-color:#004a8d;
+min-height:55px;
+text-align:center;
+}
+#FDlogo {
+display: inline-block;
+position:relative;
+left:5px;
+top:2px;
+float:left;
+}
+#FDheader1 {
+color:white;
+font-size:115%;
+display:inline;
+position:relative;
+text-align:center;
+}
+#FDHeader2 {
+color:#004a8d;
+display:inline;
+}
+#FDverse {
+display:inline;
+text-align:left;
+}
 
-<div style="width:300px;height:400px;">
-<div style="max-width:300px;min-width:150px;width:80%;height:auto;max-height:400px;min-height:200px;background-color:#F0F2F5;border-radius:5px;border:solid #004a8d 2px;font-family:'Open Sans', sans-serif;text-align:center;">
-<div style="width:100%;height:auto;background-color:#004a8d;min-height:55px;text-align:center;"><a href="http://prayer.forwardmovement.org/" target="_blank"><image width="42px" height="50px" src="http://renewalworks.org/wp-content/uploads/2013/05/FM_7_a_LOres-258x300.jpg" style="display:inline-block;position:relative;vertical-align:bottom;left:5px;top:2px;float:left;"></image></a><h4 style="color:#FFFFFF;font-size:115%;display:inline;position:relative;z-index:0;text-align:center;">Forward<br>Day by Day</h4><br></div><h4 style="color:#004a8d;display:inline;"><br><b>Daily Prayer for:</b></h4><br>
-<span id="date"></span><br><p id="verse" style="display:inline;text-align:left;"></p>
-<p id="readMore"> To read more, click <a href="http://prayer.forwardmovement.org/forward_day_by_day.php" target="_blank">here</a>.</p></div></div></html>
+</style>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<div id="FDdisplayBox">
+<div id="FDwidgetDiv">
+<div id="FDheaderArea"><a href="http://prayer.forwardmovement.org/" target="_blank" id="FDlogoLink"><image width="42px" height="50px" src="http://renewalworks.org/wp-content/uploads/2013/05/FM_7_a_LOres-258x300.jpg" id="FDlogo"></image></a><h4 id="FDheader1">Forward<br>Day by Day</h4><br></div><h4 id="FDheader2"><br><b>Daily Prayer for:</b></h4><br>
+<span id="FDdate"></span><br><p id="FDverse"></p>
+<p id="FDreadMore"> To read more, click <a href="http://prayer.forwardmovement.org/forward_day_by_day.php" target="_blank" id="FDhereLink">here</a>.</p></div></div></html>
